@@ -5,7 +5,7 @@
 /[Bb]uilds/
 
 /Assets/*
-!/Assets/Auror/
+!/Assets/Mahojin/
 !/Assets/ExternalTools
 !.gitkeep
 
