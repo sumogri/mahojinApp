@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,9 +24,6 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
 
     private int[] Assume(int[] cells)
     {
-        cells[2] = 1;
-        Debug.Log(cells);
-
         return cells;
     }
 }
