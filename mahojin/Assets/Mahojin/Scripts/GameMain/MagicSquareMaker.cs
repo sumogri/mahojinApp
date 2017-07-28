@@ -13,7 +13,11 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
 
 	// Use this for initialization
 	void Start () {
-        msFields = magicSquare.GetComponentsInChildren<InputField>();        
+        msFields = magicSquare.GetComponentsInChildren<InputField>();
+        int?[] tmp = Enumerable.Range(1, 16)
+            .Select<int,int?>(x => (x%2==0)? (int?)1 : null )
+            .ToArray();
+        CellFill(tmp, 10);
 	}
 	
 	// Update is called once per frame
@@ -21,9 +25,22 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
 		
 	}
 
-    private int[] Assume(int[] cells)
+    /// <summary>
+    /// 自明なセルを埋めるメソッド
+    /// </summary>
+    /// <param name="cells">前提とするセルの数値</param>
+    /// <param name="sum">魔方陣の定和</param>
+    /// <returns></returns>
+    private int?[] CellFill(int?[] cells, int sum)
     {
-        int sum = cells[0] + cells[1] + cells[2];
+        int[] nullIndex = cells
+            .Select((x, i) => new { Content = x, index = i })
+            .Where(x => x.Content == null)
+            .Select(x => x.index).ToArray();
+
+        foreach (int index in nullIndex)
+            Debug.Log(index);
+
         return cells;
     }
 }
