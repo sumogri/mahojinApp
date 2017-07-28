@@ -11,10 +11,12 @@ using UnityEngine.UI;
 public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
     [SerializeField] private GameObject magicSquare;
     private InputField[] msFields;  //魔方陣のセル
+    private Func<int?[],int,int?>[][] fillFuncs = new Func<int?[], int, int?>[16][];
 
 	// Use this for initialization
 	void Start () {
         msFields = magicSquare.GetComponentsInChildren<InputField>();
+        fillFuncsInit();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +40,17 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
         }
     }
 
+    private void fillFuncsInit()
+    {
+        //セルごとに使う等式を設定
+        fillFuncs[0] = new Func<int?[], int, int?>[] {
+            (c,s) => s - (c[1] + c[2] + c[3]),
+            (c,s) => s - (c[1+4] + c[2+4*2] + c[3+4*3]),
+            (c,s) => s - (c[4] + c[4*2] + c[4*3]),
+            (c,s) => s - (c[3] + c[4*3] + c[3+4*3])
+        };
+    }
+
     /// <summary>
     /// 自明なセルを埋めるメソッド
     /// </summary>
@@ -46,10 +59,10 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
     /// <returns></returns>
     private int?[] CellFill(int?[] cells, int sum)
     {
-        cells[0] = sum - (cells[1] + cells[2] + cells[3]) ?? cells[0];
-        cells[0] = sum - (cells[1 + 4] + cells[2 + 4 * 2] + cells[3 + 4 * 3]) ?? cells[0];
-        cells[0] = sum - (cells[4] + cells[4 * 2] + cells[4 * 3]) ?? cells[0];
-        cells[0] = sum - (cells[3] + cells[4 * 3] + cells[3 + 4 * 3]) ?? cells[0];
+        foreach(var func in fillFuncs[0])
+        {
+            cells[0] = func(cells, sum) ?? cells[0];
+        }
 
         return cells;
     }
