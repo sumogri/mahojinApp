@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,16 +15,28 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
 	// Use this for initialization
 	void Start () {
         msFields = magicSquare.GetComponentsInChildren<InputField>();
-        int?[] tmp = Enumerable.Range(1, 16)
-            .Select<int,int?>(x => (x%2==0)? (int?)1 : null )
-            .ToArray();
-        CellFill(tmp, 10);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void OnEditEnd()
+    {
+        int?[] cells = Enumerable.Repeat<int?>(1, 16).ToArray();
+        for (int i = 0; i < 16; i++)
+        {
+            int a;
+            cells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
+        }
+
+        cells = CellFill(cells, 34);
+        for (int i = 0; i < 16; i++)
+        {
+            msFields[i].text = cells[i].ToString();
+        }
+    }
 
     /// <summary>
     /// 自明なセルを埋めるメソッド
@@ -33,14 +46,12 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
     /// <returns></returns>
     private int?[] CellFill(int?[] cells, int sum)
     {
-        int[] nullIndex = cells
-            .Select((x, i) => new { Content = x, index = i })
-            .Where(x => x.Content == null)
-            .Select(x => x.index).ToArray();
-
-        foreach (int index in nullIndex)
-            Debug.Log(index);
+        cells[0] = sum - (cells[1] + cells[2] + cells[3]) ?? cells[0];
+        cells[0] = sum - (cells[1 + 4] + cells[2 + 4 * 2] + cells[3 + 4 * 3]) ?? cells[0];
+        cells[0] = sum - (cells[4] + cells[4 * 2] + cells[4 * 3]) ?? cells[0];
+        cells[0] = sum - (cells[3] + cells[4 * 3] + cells[3 + 4 * 3]) ?? cells[0];
 
         return cells;
     }
+    
 }
