@@ -76,12 +76,14 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
         fillFuncs[5] = new Func<int?[], int, int?>[]
         {
             (c,s) => s - (c[4] + c[2+4] + c[3+4]),
+            (c,s) => s - (c[0] + c[2+4*2] + c[3+4*3]),
             (c,s) => s - (c[1] + c[1+4*2] + c[1+4*3]),
             (c,s) => s - (c[2+4] + c[1+4*2] + c[2+4*2]),
         };
         fillFuncs[6] = new Func<int?[], int, int?>[]
         {
             (c,s) => s - (c[4] + c[1+4] + c[3+4]),
+            (c,s) => s - (c[3] + c[1+4*2] + c[4*3]),
             (c,s) => s - (c[2] + c[2+4*2] + c[2+4*3]),
             (c,s) => s - (c[1+4] + c[1+4*2] + c[2+4*2]),
         };
@@ -90,6 +92,54 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
             (c,s) => s - (c[4] + c[1+4] + c[2+4]),
             (c,s) => s - (c[3] + c[3+4*2] + c[3+4*3]),
             (c,s) => s - (c[4] + c[4*2] + c[3+4*2]),
+        };
+        fillFuncs[8] = new Func<int?[], int, int?>[]
+        {
+            (c,s) => s - (c[1+4*2] + c[2+4*2] +c[3+4*2]),
+            (c,s) => s - (c[0] + c[4*1] + c[4*3]),
+            (c,s) => s - (c[4] + c[3+4] + c[3+4*2])
+        };
+        fillFuncs[9] = new Func<int?[], int, int?>[]
+        {
+            (c,s) => s - (c[4*2] + c[2+4*2] + c[3+4*2]),
+            (c,s) => s - (c[3] + c[2+4] + c[4*3]),
+            (c,s) => s - (c[1] + c[1+4] + c[1+4*3]),
+            (c,s) => s - (c[2+4] + c[1+4] + c[2+4*2]),
+        };
+        fillFuncs[10] = new Func<int?[], int, int?>[]
+        {
+            (c,s) => s - (c[4*2] + c[1+4*2] + c[3+4*2]),
+            (c,s) => s - (c[0] + c[1+4] + c[3+4*3]),
+            (c,s) => s - (c[2] + c[2+4] + c[2+4*3]),
+            (c,s) => s - (c[1+4] + c[1+4*2] + c[2+4]),
+        };
+        fillFuncs[11] = new Func<int?[], int, int?>[]
+        {
+            (c,s) => s - (c[4*2] + c[1+4*2] + c[2+4*2]),
+            (c,s) => s - (c[3] + c[3+4] + c[3+4*3]),
+            (c,s) => s - (c[4] + c[4*2] + c[3+4]),
+        };
+        fillFuncs[12] = new Func<int?[], int, int?>[] {
+            (c,s) => s - (c[1+4*3] + c[2+4*3] + c[3+4*3]),
+            (c,s) => s - (c[3] + c[2+4] + c[1+4*2]),
+            (c,s) => s - (c[4] + c[4*2] + c[0]),
+            (c,s) => s - (c[3] + c[0] + c[3+4*3])
+        };
+        fillFuncs[13] = new Func<int?[], int, int?>[] {
+            (c,s) => s - (c[0+4*3] + c[2+4*3] + c[3+4*3]),
+            (c,s) => s - (c[1+4] + c[1+4*2] + c[1]),
+            (c,s) => s - (c[2] + c[1] + c[2+4*3]),
+        };
+        fillFuncs[14] = new Func<int?[], int, int?>[] {
+            (c,s) => s - (c[0+4*3] + c[1+4*3] + c[3+4*3]),
+            (c,s) => s - (c[2+4] + c[2+4*2] + c[2]),
+            (c,s) => s - (c[1] + c[1+4*3] + c[2]),
+        };
+        fillFuncs[15] = new Func<int?[], int, int?>[] {
+            (c,s) => s - (c[1+4*3] + c[2+4*3] + c[0+4*3]),
+            (c,s) => s - (c[0] + c[1+4] + c[2+4*2]),
+            (c,s) => s - (c[3+4] + c[3+4*2] + c[3]),
+            (c,s) => s - (c[0] + c[4*3] + c[3])
         };
     }
 
@@ -101,7 +151,7 @@ public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
     /// <returns></returns>
     private int?[] CellFill(int?[] cells, int sum)
     {
-        for(int i = 0; i < 16; i++)
+        for(int i = 4; i < 16; i++)
         {
             if (fillFuncs[i] == null) break;
             foreach(var func in fillFuncs[i])
