@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 4次方陣を作成するクラス
 /// </summary>
-public class MagicSquareMaker : SingletonMonoBehaviour<MagicSquareMaker> {
+public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
     [SerializeField] private GameObject magicSquare;
     private InputField[] msFields;  //魔方陣のセル
     private static  Func<int?[],int,int?>[][] fillFuncs = new Func<int?[], int, int?>[16][];
