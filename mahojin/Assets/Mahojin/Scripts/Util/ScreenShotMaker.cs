@@ -35,6 +35,7 @@ public class ScreenShotMaker : MonoBehaviour{
 
         //コマンドを直接たたいて、直前に保存した画像を印刷
         //印刷先はwindows規定のプリンターになる
+        /*
         Process exProcess = new Process();
         exProcess.StartInfo.CreateNoWindow = true;
         exProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -42,8 +43,8 @@ public class ScreenShotMaker : MonoBehaviour{
         exProcess.StartInfo.Arguments = "/p " + Application.dataPath + "/../" + fileName + ".png";
         exProcess.Start();
         exProcess.WaitForExit();
-
-        /*
+        */
+        
         //PrintDocumentオブジェクトの作成
         System.Drawing.Printing.PrintDocument pd =
             new System.Drawing.Printing.PrintDocument();
@@ -52,8 +53,7 @@ public class ScreenShotMaker : MonoBehaviour{
         pd.PrintPage +=
             new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
         //印刷を開始する
-        pd.Print();        
-        */
+        pd.Print();
     }
 
 
