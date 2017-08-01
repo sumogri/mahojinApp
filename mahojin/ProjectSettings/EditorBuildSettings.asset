@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Mahojin/Scenes/GameMain.unity
+    guid: be5c4d5d8c461554fa89dad93fd9c80a
