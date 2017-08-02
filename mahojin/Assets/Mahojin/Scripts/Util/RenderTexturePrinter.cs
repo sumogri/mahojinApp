@@ -4,21 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// RenderTextureを印刷するクラス
 /// </summary>
 public class RenderTexturePrinter : MonoBehaviour{
     [SerializeField] private RenderTexture renderTexture;
+    [SerializeField] private UnityEvent startEvent;
+    [SerializeField] private UnityEvent endEvent;
     private byte[] textureBytes;
 
-    public Action StartAct { get; set; }   //印刷処理開始時に走る処理
-    public Action EndAct { get; set; } //印刷処理終了時に走る処理
-    
     public void Print()
     {
-        if (StartAct != null) StartAct();
+        if (startEvent != null) startEvent.Invoke();
 
         StartCoroutine(PrintRenderTexture());
     }
@@ -28,19 +29,22 @@ public class RenderTexturePrinter : MonoBehaviour{
         
         yield return new WaitForEndOfFrame();
 
-        //renderTextureをTexture2Dにしてpngのbyte列を取得
+        //renderTextureをTexture2Dに変換
         var texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         texture.Apply();
-        textureBytes = texture.EncodeToPNG();
-        
+
+        // TODO 非同期にUnity APIを呼ぶ方法を探す
+        yield return null; //下の処理で画面が止まるので、一旦戻す
+        textureBytes = texture.EncodeToPNG(); //PNGに変換(重い)
+
         //PrintDocumentを使って印刷
         PrintDocument pd = new PrintDocument();
         pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
         pd.Print();
 
-        if (EndAct != null) EndAct();
+        if (endEvent != null) endEvent.Invoke();
     }
 
     /// <summary>
