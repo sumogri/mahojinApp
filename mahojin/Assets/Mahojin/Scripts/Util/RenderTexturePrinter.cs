@@ -20,11 +20,33 @@ public class RenderTexturePrinter : MonoBehaviour{
     private byte[] textureBytes;
     private PrintDocument printDocument = new PrintDocument();
     
-    void Start()
+
+    void Awake()
     {
+        // UI周りの初期化
         printDocument.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+        printerDropdown.ClearOptions();
+        foreach (var name in PrinterSettings.InstalledPrinters)
+        {
+            printerDropdown.options.Add(new Dropdown.OptionData(name.ToString()));
+        }
+        printerDropdown.value = printerDropdown.options.FindIndex((x) => 
+                x.text == printDocument.PrinterSettings.PrinterName);
+        
     }
 
+    /// <summary>
+    /// Printで印刷するプリンター名を変更する
+    /// </summary>
+    /// <param name="value">InstalledPrintersのindex</param>
+    public void SetPrinterName(int index)
+    {
+        printDocument.PrinterSettings.PrinterName = PrinterSettings.InstalledPrinters[index];
+    } 
+
+    /// <summary>
+    /// 現在のフレームのrenderTextureを印刷するメソッド
+    /// </summary>
     public void Print()
     {
         if (startEvent != null) startEvent.Invoke();
