@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 /// <summary>
@@ -15,7 +16,14 @@ public class RenderTexturePrinter : MonoBehaviour{
     [SerializeField] private RenderTexture renderTexture;
     [SerializeField] private UnityEvent startEvent;
     [SerializeField] private UnityEvent endEvent;
+    [SerializeField] private Dropdown printerDropdown;
     private byte[] textureBytes;
+    private PrintDocument printDocument = new PrintDocument();
+    
+    void Start()
+    {
+        printDocument.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+    }
 
     public void Print()
     {
@@ -40,9 +48,7 @@ public class RenderTexturePrinter : MonoBehaviour{
         textureBytes = texture.EncodeToPNG(); //PNGに変換(重い)
 
         //PrintDocumentを使って印刷
-        PrintDocument pd = new PrintDocument();
-        pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-        pd.Print();
+        printDocument.Print();
 
         if (endEvent != null) endEvent.Invoke();
     }
@@ -52,7 +58,7 @@ public class RenderTexturePrinter : MonoBehaviour{
     /// </summary>
     private void pd_PrintPage(object sender,PrintPageEventArgs e)
     {
-        Image img = (Image) new ImageConverter().ConvertFrom(textureBytes); //byte[]からImage生成
+        System.Drawing.Image img = (System.Drawing.Image) new ImageConverter().ConvertFrom(textureBytes); //byte[]からImage生成
         e.Graphics.DrawImage(img,e.PageBounds);
         e.HasMorePages = false;
         img.Dispose();
