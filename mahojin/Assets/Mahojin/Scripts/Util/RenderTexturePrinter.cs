@@ -32,13 +32,12 @@ public class RenderTexturePrinter : MonoBehaviour{
         }
         printerDropdown.value = printerDropdown.options.FindIndex((x) => 
                 x.text == printDocument.PrinterSettings.PrinterName);
-        
     }
 
     /// <summary>
     /// Printで印刷するプリンター名を変更する
     /// </summary>
-    /// <param name="value">InstalledPrintersのindex</param>
+    /// <param name="index">InstalledPrintersのindex</param>
     public void SetPrinterName(int index)
     {
         printDocument.PrinterSettings.PrinterName = PrinterSettings.InstalledPrinters[index];
