@@ -161,9 +161,23 @@ public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
     {
         for(int i = 0; i < 16; i++)
         {
-            foreach(var func in fillFuncs[i])
+            var colors = msFields[i].colors;
+
+            if (cells[i] != null) continue;
+
+            var assumes = fillFuncs[i].Select( (x) => { return x(cells, sum); })
+                .Where(x => x.HasValue == true).Distinct().ToArray();
+            
+            //解が求まる中で唯一になる場合
+            if (assumes.Count() == 1)
             {
-                cells[i] = func(cells,sum) ?? cells[i];
+                cells[i] = assumes[0];
+            }
+            //求まらない or 矛盾する場合
+            else
+            {
+                colors.normalColor = Color.red;
+                msFields[i].colors = colors;
             }
         }
 
