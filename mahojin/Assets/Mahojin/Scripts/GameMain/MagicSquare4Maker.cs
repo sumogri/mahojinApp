@@ -12,31 +12,39 @@ public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
     [SerializeField] private GameObject magicSquare;
     private InputField[] msFields;  //魔方陣のセル
     private static  Func<int?[],int,int?>[][] fillFuncs = new Func<int?[], int, int?>[16][];
+    private int sum;
+    private int?[] msCells;
 
-	// Use this for initialization
-	void Start () {
+    public int?[] MsCells { get { return msCells; } }
+
+    // Use this for initialization
+    void Start () {
         msFields = magicSquare.GetComponentsInChildren<InputField>();
+        sum = 34;
         fillFuncsInit();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-    public void OnEditEnd()
-    {
-        int?[] cells = Enumerable.Repeat<int?>(1, 16).ToArray();
+        msCells = Enumerable.Repeat<int?>(null, 16).ToArray();
         for (int i = 0; i < 16; i++)
         {
             int a;
-            cells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
+            msCells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
         }
+    }
 
-        cells = CellFill(cells, 34);
+    public void SetSum(string str)
+    {
+        int.TryParse(str, out sum);
+    }
+
+    public void Assume()
+    {
+        msCells = CellFill(msCells, sum);
         for (int i = 0; i < 16; i++)
         {
-            msFields[i].text = cells[i].ToString();
+            msFields[i].text = msCells[i].ToString();
         }
     }
 
@@ -151,9 +159,8 @@ public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
     /// <returns></returns>
     private int?[] CellFill(int?[] cells, int sum)
     {
-        for(int i = 4; i < 16; i++)
+        for(int i = 0; i < 16; i++)
         {
-            if (fillFuncs[i] == null) break;
             foreach(var func in fillFuncs[i])
             {
                 cells[i] = func(cells,sum) ?? cells[i];
