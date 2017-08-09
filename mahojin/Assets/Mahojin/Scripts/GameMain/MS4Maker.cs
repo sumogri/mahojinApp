@@ -1,54 +1,53 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
-/// 4次方陣を作成するクラス
+/// 4次方陣を作成する関数群
 /// </summary>
-public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
-    [SerializeField] private GameObject magicSquare;
-    private InputField[] msFields;  //魔方陣のセル
-    private static  Func<int?[],int,int?>[][] fillFuncs = new Func<int?[], int, int?>[16][];
-    private int sum;
-    private int?[] msCells;
+public static class MS4Maker{
+    private static Func<int?[], int, int?>[][] fillFuncs = new Func<int?[], int, int?>[16][];
 
-    public int?[] MsCells { get { return msCells; } }
-
-    // Use this for initialization
-    void Start () {
-        msFields = magicSquare.GetComponentsInChildren<InputField>();
-        sum = 34;
+    static MS4Maker()
+    {
         fillFuncsInit();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        msCells = Enumerable.Repeat<int?>(null, 16).ToArray();
+    }
+
+    /// <summary>
+    /// 自明なセルを埋めるメソッド
+    /// 魔方陣の行列対角和を用いて求める
+    /// </summary>
+    /// <param name="cells">前提とするセルの数値</param>
+    /// <param name="sum">魔方陣の定和</param>
+    /// <returns></returns>
+    public static int?[] FillBySums(int?[] cells, int sum)
+    {
         for (int i = 0; i < 16; i++)
         {
-            int a;
-            msCells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
+            
+            if (cells[i] != null) continue;
+
+            var assumes = fillFuncs[i].Select((x) => { return x(cells, sum); })
+                .Where(x => x.HasValue == true).Distinct().ToArray();
+
+            //解が求まる中で唯一になる場合
+            if (assumes.Count() == 1)
+            {
+                cells[i] = assumes[0];
+            }
         }
+
+        return cells;
     }
 
-    public void SetSum(string str)
-    {
-        int.TryParse(str, out sum);
-    }
-
-    public void Assume()
-    {
-        msCells = CellFill(msCells, sum);
-        for (int i = 0; i < 16; i++)
-        {
-            msFields[i].text = msCells[i].ToString();
-        }
-    }
-
-    private void fillFuncsInit()
+    /// <summary>
+    /// 各セルに対して、それを求める式の初期化
+    /// e.g.)   一行目の各セルの数をa-dとする
+    ///         a = sum - b - c - d
+    /// </summary>
+    private static void fillFuncsInit()
     {
         if (fillFuncs[0] != null) return;
 
@@ -153,35 +152,29 @@ public class MagicSquare4Maker : SingletonMonoBehaviour<MagicSquare4Maker> {
 
     /// <summary>
     /// 自明なセルを埋めるメソッド
+    /// 万能方陣を使っている
     /// </summary>
-    /// <param name="cells">前提とするセルの数値</param>
-    /// <param name="sum">魔方陣の定和</param>
-    /// <returns></returns>
-    private int?[] CellFill(int?[] cells, int sum)
+    /// <param name="cells">セルにある数</param>
+    /// <param name="sum">定和</param>
+    /// <returns>セルに入れるべき数</returns>
+    public static int?[] FillByOmnipotent(int?[] cells, int sum)
     {
-        for(int i = 0; i < 16; i++)
-        {
-            var colors = msFields[i].colors;
+        // [万能方陣]
+        //―――――――――――――――――
+        //| a + h | b + g | c + e | d + f |
+        //―――――――――――――――――
+        //| d + e | c + f | b + h | a + g |
+        //―――――――――――――――――
+        //| b + f | a + e | d + g | c + h |
+        //―――――――――――――――――
+        //| c + g | d + h | a + f | b + e |
+        //―――――――――――――――――
+        // これに従って、行列対角隅端どれか4つが埋まったら
 
-            if (cells[i] != null) continue;
+        var nums = cells.Where(x => x.HasValue);
 
-            var assumes = fillFuncs[i].Select( (x) => { return x(cells, sum); })
-                .Where(x => x.HasValue == true).Distinct().ToArray();
-            
-            //解が求まる中で唯一になる場合
-            if (assumes.Count() == 1)
-            {
-                cells[i] = assumes[0];
-            }
-            //求まらない or 矛盾する場合
-            else
-            {
-                colors.normalColor = Color.red;
-                msFields[i].colors = colors;
-            }
-        }
+
 
         return cells;
     }
-    
 }

@@ -20,8 +20,8 @@ public class SumController : MonoBehaviour {
         {
             for (int j = 0; j < 4; j++)
             {
-                sum1 += MagicSquare4Maker.I.MsCells[i + j * 4];
-                sum2 += MagicSquare4Maker.I.MsCells[j + i * 4];
+                sum1 += MagicSquare4Manager.I.MsCells[i + j * 4];
+                sum2 += MagicSquare4Manager.I.MsCells[j + i * 4];
             }
             if(sum1 != null || sum2 != null)
             {
@@ -33,8 +33,8 @@ public class SumController : MonoBehaviour {
         sum1 = 0; sum2 = 0;
         for(int i = 0; i < 4; i++)
         {
-            sum1 += MagicSquare4Maker.I.MsCells[i + i * 4];
-            sum2 += MagicSquare4Maker.I.MsCells[3 - i + i * 4];
+            sum1 += MagicSquare4Manager.I.MsCells[i + i * 4];
+            sum2 += MagicSquare4Manager.I.MsCells[3 - i + i * 4];
         }
         if (sum1 != null || sum2 != null)
         {
