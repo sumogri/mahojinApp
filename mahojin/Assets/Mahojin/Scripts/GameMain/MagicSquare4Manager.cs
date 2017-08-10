@@ -46,7 +46,7 @@ public class MagicSquare4Manager: SingletonMonoBehaviour<MagicSquare4Manager> {
     /// </summary>
     public void Assume()
     {
-        msCells = MS4Maker.FillBySums(msCells, sum);
+        msCells = MS4Math.FillByOmnipotent(msCells, sum);
         for (int i = 0; i < 16; i++)
         {
             msFields[i].text = msCells[i].ToString();

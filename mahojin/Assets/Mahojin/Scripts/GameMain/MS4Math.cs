@@ -10,10 +10,13 @@ using UnityEngine;
 public static class MS4Math{
     //あるセルに入るべき数を、定和からの減算で求める式群
     private static Func<int?[], int, int?>[][] cellFuncs = new Func<int?[], int, int?>[16][];
+    //魔方陣の定和を求める式群
+    private static List< Func<int?[], int?> > sumFuncs;
 
     static MS4Math()
     {
         InitCellFuncs();
+        InitSumFuncs();
     }
 
     /// <summary>
@@ -42,6 +45,32 @@ public static class MS4Math{
 
         return cells;
     }
+    
+    /// <summary>
+    /// 自明なセルを埋めるメソッド
+    /// 万能方陣を使っている
+    /// </summary>
+    /// <param name="cells">セルにある数</param>
+    /// <param name="sum">定和</param>
+    /// <returns>セルに入れるべき数</returns>
+    public static int?[] FillByOmnipotent(int?[] cells, int sum)
+    {
+        // [万能方陣]
+        //―――――――――――――――――
+        //| a + h | b + g | c + e | d + f |
+        //―――――――――――――――――
+        //| d + e | c + f | b + h | a + g |
+        //―――――――――――――――――
+        //| b + f | a + e | d + g | c + h |
+        //―――――――――――――――――
+        //| c + g | d + h | a + f | b + e |
+        //―――――――――――――――――
+        // これに従って、行列対角隅端どれか4つが埋まったら、その他のセルを埋める。
+
+        sumFuncs.ForEach(x => Debug.Log(x.Invoke(cells)));
+
+        return cells;
+    }
 
     /// <summary>
     /// 各セルに対して、それを求める式の初期化
@@ -50,8 +79,6 @@ public static class MS4Math{
     /// </summary>
     private static void InitCellFuncs()
     {
-        if (cellFuncs[0] != null) return;
-
         //セルごとに使う等式を設定
         cellFuncs[0] = new Func<int?[], int, int?>[] {
             (c,s) => s - (c[1] + c[2] + c[3]),
@@ -152,33 +179,25 @@ public static class MS4Math{
     }
 
     /// <summary>
-    /// 自明なセルを埋めるメソッド
-    /// 万能方陣を使っている
+    /// 定和を計算する式群の初期化
     /// </summary>
-    /// <param name="cells">セルにある数</param>
-    /// <param name="sum">定和</param>
-    /// <returns>セルに入れるべき数</returns>
-    public static int?[] FillByOmnipotent(int?[] cells, int sum)
+    private static void InitSumFuncs()
     {
-        // [万能方陣]
-        //―――――――――――――――――
-        //| a + h | b + g | c + e | d + f |
-        //―――――――――――――――――
-        //| d + e | c + f | b + h | a + g |
-        //―――――――――――――――――
-        //| b + f | a + e | d + g | c + h |
-        //―――――――――――――――――
-        //| c + g | d + h | a + f | b + e |
-        //―――――――――――――――――
-        // これに従って、行列対角隅端どれか4つが埋まったら、その他のセルを埋める。
+        sumFuncs = new List<Func<int?[], int?>>();
 
-        //もし、
-        for(int i = 0; i < 4; i++)
-        {
-
-        }
-
-
-        return cells;
+        //列
+        foreach (var i in Enumerable.Range(0, 4))
+            sumFuncs.Add(m => m[0+4*i] + m[1+4*i] + m[2+4*i] + m[3+4*i]);
+        //行
+        foreach (var i in Enumerable.Range(0, 4))
+            sumFuncs.Add(m => m[i] + m[i+4] + m[i+4*2] + m[i+4*3]);
+        //対角
+        sumFuncs.Add(m => m[0]+m[1+4]+m[2+4*2]+m[3+4*3]);
+        sumFuncs.Add(m => m[3]+m[2+4]+m[1+4*2]+m[0+4*3]);
+        //隅と端
+        sumFuncs.Add(m => m[0] + m[3] + m[4*3] + m[3+4*3]);
+        sumFuncs.Add(m => m[1+4]+m[2+4]+m[1+4*2]+m[2+4*2]);
+        sumFuncs.Add(m => m[1] + m[2] + m[1+4*3] + m[2+4*3]);
+        sumFuncs.Add(m => m[4] + m[4*2] + m[3+4] + m[3+4*2]);
     }
 }
