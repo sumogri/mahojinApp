@@ -5,13 +5,13 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// 4次方陣を作成する関数群
+/// 4次方陣にかかわる関数群
 /// </summary>
-public static class MS4Maker{
+public static class MS4Math{
     //あるセルに入るべき数を、定和からの減算で求める式群
     private static Func<int?[], int, int?>[][] cellFuncs = new Func<int?[], int, int?>[16][];
 
-    static MS4Maker()
+    static MS4Math()
     {
         InitCellFuncs();
     }
