@@ -14,6 +14,7 @@ namespace Mahojin
         //あるセルに入るべき数を、定和からの減算で求める式群
         private static Func<int?[], int, int?>[][] cellFuncs = new Func<int?[], int, int?>[16][];
         private static List<Func<int?[], int?>> sumFuncs;
+        private static List<int[]> sumFulfillIndex;
 
         /// <summary>
         /// 魔方陣の定和を求める式群
@@ -23,10 +24,19 @@ namespace Mahojin
             get { return sumFuncs; }
         }
 
+        /// <summary>
+        /// 定和を満たすIndexのまとまり
+        /// </summary>
+        public static List<int[]> SumFulfillIndex
+        {
+            get { return sumFulfillIndex; }
+        }
+
         static MS4Math()
         {
             InitCellFuncs();
             InitSumFuncs();
+            InitSumFulfillIndex();
         }
        
         /// <summary>
@@ -75,11 +85,71 @@ namespace Mahojin
             //―――――――――――――――――
             //| c + g | d + h | a + f | b + e |
             //―――――――――――――――――
-            // これに従って、行列対角隅端どれか4つが埋まったら、その他のセルを埋める。
+            // これに従って、行列対角隅端どれか1つが埋まったら、その他のセルを埋める。
 
-            sumFuncs.ForEach(x => Debug.Log(x.Invoke(cells)));
+            int[][] omnipotent1 = {new int[]{ 0,1,2,3 },
+                                  new int[]{ 3,2,1,0 },
+                                  new int[]{ 1,0,3,2 },
+                                  new int[]{ 2,3,0,1 } };
+            int[][] omnipotent2 = {new int[]{ 7,6,4,5 },
+                                  new int[]{ 4,5,7,6 },
+                                  new int[]{ 5,4,6,7 },
+                                  new int[]{ 6,7,5,4 } };
+
+            int?[] nums = Cutout(cells)
+                            .Where(x => x.Count(y => y.HasValue) == 4)
+                            .FirstOrDefault();
+
+            if (nums == null) return cells; //一つも埋まってない
+
+            int[] parm = new int[8];    //万能方陣の変数
+
+            foreach (var num in nums) { Debug.Log(num); }
+            //var random = new System.Random();
+
+            //for(int i = 0; i < 4; i++)
+            //{
+            //    parm[i] = random.Next(1,nums[i].Value);
+            //    parm[i + 4] = nums[i].Value - parm[i];
+            //}
 
             return cells;
+        }
+        
+        /// <summary>
+        /// セルを定和を満たす単位で切り取るメソッド
+        /// </summary>
+        /// <remarks>
+        /// SumFuncsのように専用メソッドが用意されている場合、そちらを優先して使用すること
+        /// </remarks>
+        /// <param name="cells">セルの数値</param>
+        /// <returns>カットしたセル群</returns>
+        public static List<int?[]> Cutout(int?[] cells)
+        {
+            return sumFulfillIndex.Select(x => x.Select(y => cells[y]).ToArray()).ToList();
+        }
+        
+        /// <summary>
+        /// セルの定和を満たす単位ごとのIndexを初期化する
+        /// </summary>
+        private static void InitSumFulfillIndex()
+        {
+            sumFulfillIndex = new List<int[]>();
+
+            //列
+            foreach (var i in Enumerable.Range(0, 4))
+                SumFulfillIndex.Add(new int[] { 0 + 4 * i, 1 + 4 * i, 2 + 4 * i, 3 + 4 * i });
+            //行
+            foreach (var i in Enumerable.Range(0, 4))
+                SumFulfillIndex.Add(new int[] { i, i + 4, i + 4 * 2, i + 4 * 3 });
+            //対角
+            SumFulfillIndex.Add(new int[] { 0, 1 + 4, 2 + 4 * 2, 3 + 4 * 3 });
+            SumFulfillIndex.Add(new int[] { 3, 2 + 4, 1 + 4 * 2, 0 + 4 * 3 });
+            //隅と端
+            SumFulfillIndex.Add(new int[] { 0, 3, 4 * 3, 3 + 4 * 3 });
+            SumFulfillIndex.Add(new int[] { 1 + 4, 2 + 4, 1 + 4 * 2, 2 + 4 * 2 });
+            SumFulfillIndex.Add(new int[] { 1, 2, 1 + 4 * 3, 2 + 4 * 3 });
+            SumFulfillIndex.Add(new int[] { 4, 4 * 2, 3 + 4, 3 + 4 * 2 });
         }
 
         /// <summary>
