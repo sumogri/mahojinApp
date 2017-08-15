@@ -4,17 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 namespace Mahojin
 {
     /// <summary>
     /// 4次方陣を管理するクラス
     /// </summary>
-    public class MagicSquare4Manager : SingletonMonoBehaviour<MagicSquare4Manager>
+    public class MagicSquare4Controller : SingletonMonoBehaviour<MagicSquare4Controller>
     {
         [SerializeField] private GameObject magicSquare; //魔方陣の親オブジェクト
+        [SerializeField] private int sum;     //定和
+        [SerializeField] private UnityEvent onEndEdit;
         private InputField[] msFields;  //魔方陣のセル
-        private int sum;     //定和
         private int?[] msCells; //InputFieldを数値化したもの
 
         /// <summary>
@@ -26,7 +28,6 @@ namespace Mahojin
         void Start()
         {
             msFields = magicSquare.GetComponentsInChildren<InputField>();
-            sum = 34;
         }
 
         // Update is called once per frame
@@ -61,5 +62,12 @@ namespace Mahojin
             }
         }
 
+        /// <summary>
+        /// 魔方陣に入力が完了した時に走る関数
+        /// </summary>
+        public void OnEndEdit()
+        {
+            onEndEdit.Invoke();
+        }
     }
 }

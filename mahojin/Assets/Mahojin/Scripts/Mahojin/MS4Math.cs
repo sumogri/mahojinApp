@@ -72,7 +72,7 @@ namespace Mahojin
         /// </summary>
         /// <param name="cells">セルにある数</param>
         /// <param name="sum">定和</param>
-        /// <returns>セルに入れるべき数</returns>
+        /// <returns>セルに入れるべき数。失敗したとき、cellsを返す</returns>
         public static int?[] FillByOmnipotent(int?[] cells, int sum)
         {
             // [万能方陣]
@@ -87,35 +87,52 @@ namespace Mahojin
             //―――――――――――――――――
             // これに従って、行列対角隅端どれか1つが埋まったら、その他のセルを埋める。
 
-            int[][] omnipotent1 = {new int[]{ 0,1,2,3 },
-                                  new int[]{ 3,2,1,0 },
-                                  new int[]{ 1,0,3,2 },
-                                  new int[]{ 2,3,0,1 } };
-            int[][] omnipotent2 = {new int[]{ 7,6,4,5 },
-                                  new int[]{ 4,5,7,6 },
-                                  new int[]{ 5,4,6,7 },
-                                  new int[]{ 6,7,5,4 } };
+            int[][][] latinSquares = 
+                {new int[][]{new int[]{ 0,1,2,3 },
+                             new int[]{ 3,2,1,0 },
+                             new int[]{ 1,0,3,2 },
+                             new int[]{ 2,3,0,1 } },
+                 new int[][]{new int[]{ 7,6,4,5 },
+                             new int[]{ 4,5,7,6 },
+                             new int[]{ 5,4,6,7 },
+                             new int[]{ 6,7,5,4 } } };
+            var parms = new int[8];
+            var random = new System.Random();
 
-            int?[] nums = Cutout(cells)
-                            .Where(x => x.Count(y => y.HasValue) == 4)
+            //定和を満たすセル群
+            var sumFulfillCells = sumFulfillIndex.Select(x => x.Select(y => new { Num = cells[y], Index = y }))
+                            .Where(x => x.Count(y => y.Num.HasValue) == 4)
                             .FirstOrDefault();
 
-            if (nums == null) return cells; //一つも埋まってない
+            if (sumFulfillCells == null)  return cells; //一つも埋まってない
 
-            int[] parm = new int[8];    //万能方陣の変数
+            int?[] retCells = new int?[4 * 4];
 
-            foreach (var num in nums) { Debug.Log(num); }
-            //var random = new System.Random();
+            //一定回数試行する
+            for(int cnt = 0; cnt < 100; cnt++)
+            {
+                //万能方陣のパラメータを設定
+                foreach (var cell in sumFulfillCells)
+                {
+                    int[] indexes = {latinSquares[0][cell.Index / 4][cell.Index % 4],
+                                 latinSquares[1][cell.Index / 4][cell.Index % 4]};
+                    parms[indexes[0]] = random.Next(0, cell.Num.Value);
+                    parms[indexes[1]] = cell.Num.Value - parms[indexes[0]];
+                }
 
-            //for(int i = 0; i < 4; i++)
-            //{
-            //    parm[i] = random.Next(1,nums[i].Value);
-            //    parm[i + 4] = nums[i].Value - parm[i];
-            //}
+                for (int i = 0; i < 4 * 4; i++)
+                {
+                    retCells[i] = parms[latinSquares[0][i / 4][i % 4]] + parms[latinSquares[1][i / 4][i % 4]];
+                }
 
+                //独立なセル群になったら、それを返す
+                if (retCells.Distinct().Count() == 4 * 4) return retCells;  
+            }
+
+            //試行に失敗したので、元のセルを返す
             return cells;
         }
-        
+
         /// <summary>
         /// セルを定和を満たす単位で切り取るメソッド
         /// </summary>
