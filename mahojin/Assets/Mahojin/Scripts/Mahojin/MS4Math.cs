@@ -70,7 +70,7 @@ namespace Mahojin
         /// 自明なセルを埋めるメソッド
         /// 万能方陣を使っている
         /// </summary>
-        /// <param name="cells">セルにある数</param>
+        /// <param name="cells">セルにある数,すべてのセルについて0以上であること</param>
         /// <param name="sum">定和</param>
         /// <returns>セルに入れるべき数。失敗したとき、cellsを返す</returns>
         public static int?[] FillByOmnipotent(int?[] cells, int sum)
@@ -109,7 +109,7 @@ namespace Mahojin
             int?[] retCells = new int?[4 * 4];
 
             //一定回数試行する
-            for(int cnt = 0; cnt < 100; cnt++)
+            for(int cnt = 0; cnt < 1000; cnt++)
             {
                 //万能方陣のパラメータを設定
                 foreach (var cell in sumFulfillCells)

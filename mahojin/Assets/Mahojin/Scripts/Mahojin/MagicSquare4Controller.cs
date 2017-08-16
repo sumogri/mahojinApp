@@ -64,9 +64,13 @@ namespace Mahojin
         {
             foreach(var field in msFields)
             {
-                field.text = "";
-                field.onValueChanged.Invoke("");
-                field.onEndEdit.Invoke("");
+                field.text = null;
+            }
+            UpdateMSCells();
+            foreach (var field in msFields)
+            {
+                field.onValueChanged.Invoke(null);
+                field.onEndEdit.Invoke(null);
             }
         }
 
