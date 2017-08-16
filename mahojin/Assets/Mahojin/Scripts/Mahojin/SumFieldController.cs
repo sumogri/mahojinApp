@@ -8,11 +8,15 @@ using UnityEngine.UI;
 /// 定和を表示するInputFieldのコントローラー
 /// </summary>
 public class SumFieldController : MonoBehaviour {
+    [SerializeField,Range (0, 9)] private int useFuncId;
+    [SerializeField] private GameObject haveCellsObject;
+    private Mahojin.IHaveCells cells;
     private InputField myInputField;
     
     void Start()
     {
         myInputField = gameObject.GetComponent<InputField>();
+        cells = haveCellsObject.GetComponent(typeof(Mahojin.IHaveCells)) as Mahojin.IHaveCells;
     }
     
     /// <summary>
@@ -20,22 +24,7 @@ public class SumFieldController : MonoBehaviour {
     /// </summary>
     public void TextUpdate()
     {
-        var sums = Mahojin.MS4Math.SumFuncs
-                    .Select(x => x.Invoke(Mahojin.MagicSquare4Controller.I.MsCells))
-                    .Where(x => x.HasValue)
-                    .Distinct().ToArray();
-
-        if (sums.Length == 1)
-            myInputField.text = sums[0].ToString();
-    }
-
-    /// <summary>
-    /// 関数を指定して使うTextUpdate
-    /// </summary>
-    /// <param name="funcId">使用する定和</param>
-    public void TextUpdate(int funcId)
-    {
-        var sums = Mahojin.MS4Math.SumFuncs[funcId].Invoke(Mahojin.MagicSquare4Controller.I.MsCells);
-        myInputField.text = sums.Value.ToString();
+        var sums = Mahojin.MS4Math.SumFuncs[useFuncId](cells.GetCells());
+        myInputField.text = sums.ToString();
     }
 }
