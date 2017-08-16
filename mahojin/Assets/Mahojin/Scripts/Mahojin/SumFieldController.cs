@@ -10,13 +10,14 @@ using UnityEngine.UI;
 public class SumFieldController : MonoBehaviour {
     [SerializeField,Range (0, 9)] private int useFuncId;
     [SerializeField] private GameObject haveCellsObject;
-    private Mahojin.IHaveCells cells;
+    private Mahojin.IHaveCells haveCells;
     private InputField myInputField;
     
     void Start()
     {
         myInputField = gameObject.GetComponent<InputField>();
-        cells = haveCellsObject.GetComponent(typeof(Mahojin.IHaveCells)) as Mahojin.IHaveCells;
+        haveCells = haveCellsObject.GetComponent(typeof(Mahojin.IHaveCells)) as Mahojin.IHaveCells;
+        TextUpdate();
     }
     
     /// <summary>
@@ -24,7 +25,8 @@ public class SumFieldController : MonoBehaviour {
     /// </summary>
     public void TextUpdate()
     {
-        var sums = Mahojin.MS4Math.SumFuncs[useFuncId](cells.GetCells());
+        int?[] cells = haveCells.GetCells().Select(x => x.HasValue ? x : 0).ToArray();
+        var sums = Mahojin.MS4Math.SumFuncs[useFuncId](cells);
         myInputField.text = sums.ToString();
     }
 }

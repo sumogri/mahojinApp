@@ -15,6 +15,7 @@ namespace Mahojin
     {
         [SerializeField] private GameObject magicSquare; //魔方陣の親オブジェクト
         [SerializeField] private int sum;     //定和
+        [SerializeField] private UnityEvent onValueChanged;
         [SerializeField] private UnityEvent onEndEdit;
         private InputField[] msFields;  //魔方陣のセル
         private int?[] msCells; //InputFieldを数値化したもの
@@ -24,21 +25,15 @@ namespace Mahojin
         /// </summary>
         public int?[] MsCells { get { return msCells; } }
 
-        // Use this for initialization
-        void Start()
+        void Awake()
         {
             msFields = magicSquare.GetComponentsInChildren<InputField>();
+            UpdateMSCells();
         }
 
-        // Update is called once per frame
         void Update()
         {
-            msCells = Enumerable.Repeat<int?>(null, 16).ToArray();
-            for (int i = 0; i < 16; i++)
-            {
-                int a;
-                msCells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
-            }
+            UpdateMSCells();
         }
 
         /// <summary>
@@ -63,16 +58,38 @@ namespace Mahojin
         }
 
         /// <summary>
-        /// 魔方陣に入力が完了した時に走る関数
+        /// すべてのセルを空にする
         /// </summary>
-        public void OnEndEdit()
+        public void DeleteAll()
         {
-            onEndEdit.Invoke();
+            foreach(var field in msFields)
+            {
+                field.text = "";
+                field.onValueChanged.Invoke("");
+                field.onEndEdit.Invoke("");
+            }
         }
 
-        public int?[] GetCells()
+        /// <summary>
+        /// 魔方陣に入力が完了した時に走る関数
+        /// </summary>
+        public void OnEndEdit(){ onEndEdit.Invoke(); }
+
+        /// <summary>
+        /// 魔方陣に入力された数が変更されたときに走る関数
+        /// </summary>
+        public void OnValueChanged(){ onValueChanged.Invoke(); }
+
+        public int?[] GetCells(){ return MsCells; }
+
+        private void UpdateMSCells()
         {
-            return MsCells;
+            msCells = Enumerable.Repeat<int?>(null, 16).ToArray();
+            for (int i = 0; i < 16; i++)
+            {
+                int a;
+                msCells[i] = int.TryParse(msFields[i].text, out a) ? (int?)a : null;
+            }
         }
     }
 }
