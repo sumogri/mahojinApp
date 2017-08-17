@@ -515,6 +515,8 @@ GameObject:
   - component: {fileID: 45483367}
   - component: {fileID: 45483369}
   - component: {fileID: 45483368}
+  - component: {fileID: 45483371}
+  - component: {fileID: 45483370}
   m_Layer: 5
   m_Name: Text (7)
   m_TagString: Untagged
@@ -579,6 +581,60 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 45483366}
+--- !u!114 &45483370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 45483366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f806cb506fe6000479af55e06726bb73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1019120930}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &45483371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 45483366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e411d752969b540823bd5df789ff4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 335585564}
+        m_MethodName: NormalColorSet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1019120925}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &45721458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,6 +2852,8 @@ GameObject:
   - component: {fileID: 318895782}
   - component: {fileID: 318895784}
   - component: {fileID: 318895783}
+  - component: {fileID: 318895786}
+  - component: {fileID: 318895785}
   m_Layer: 5
   m_Name: Text (11)
   m_TagString: Untagged
@@ -2853,13 +2911,67 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8A66\u3057\u306B\u4F5C\u3063\u305F\u9B54\u65B9\u9663\u3092\u6D88\u3057\u305F\u3044\u5834\u5408\u306F\u3001\u4E0B\u306E\"\u5168\u524A\u9664\"\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u304F\u3060\u3055\u3044"
+  m_Text: "\u4F5C\u3063\u305F\u9B54\u65B9\u9663\u3092\u6D88\u3057\u305F\u3044\u5834\u5408\u306F\u3001\u4E0B\u306E\"\u5168\u524A\u9664\"\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u3066\u304F\u3060\u3055\u3044"
 --- !u!222 &318895784
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 318895781}
+--- !u!114 &318895785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 318895781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f806cb506fe6000479af55e06726bb73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 652355026}
+        m_MethodName: ResetColor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &318895786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 318895781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e411d752969b540823bd5df789ff4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 335585564}
+        m_MethodName: NormalColorSet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 652355021}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &335585562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4712,6 +4824,7 @@ GameObject:
   - component: {fileID: 652355025}
   - component: {fileID: 652355024}
   - component: {fileID: 652355023}
+  - component: {fileID: 652355026}
   m_Layer: 5
   m_Name: ResetButton
   m_TagString: Untagged
@@ -4823,6 +4936,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 652355021}
+--- !u!114 &652355026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 652355021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898f6bd9ea887f342b680703623130bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &663298541
 GameObject:
   m_ObjectHideFlags: 0
@@ -7174,6 +7298,7 @@ GameObject:
   - component: {fileID: 1019120929}
   - component: {fileID: 1019120928}
   - component: {fileID: 1019120927}
+  - component: {fileID: 1019120930}
   m_Layer: 5
   m_Name: AssumeButton
   m_TagString: Untagged
@@ -7285,6 +7410,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1019120925}
+--- !u!114 &1019120930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019120925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898f6bd9ea887f342b680703623130bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1022761953 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114379817403845516, guid: 88c5263ebbf00e5459a7d69a9b543ab9,
@@ -9203,6 +9339,8 @@ GameObject:
   - component: {fileID: 1331643860}
   - component: {fileID: 1331643862}
   - component: {fileID: 1331643861}
+  - component: {fileID: 1331643864}
+  - component: {fileID: 1331643863}
   m_Layer: 5
   m_Name: Text (9)
   m_TagString: Untagged
@@ -9267,6 +9405,60 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1331643859}
+--- !u!114 &1331643863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331643859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f806cb506fe6000479af55e06726bb73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 335585564}
+        m_MethodName: ColorResets
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 856742182}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &1331643864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331643859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e411d752969b540823bd5df789ff4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 335585564}
+        m_MethodName: NormalColorsSet
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 856742182}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &1333892540
 GameObject:
   m_ObjectHideFlags: 0
@@ -12951,6 +13143,7 @@ GameObject:
   - component: {fileID: 1798967901}
   - component: {fileID: 1798967900}
   - component: {fileID: 1798967899}
+  - component: {fileID: 1798967902}
   m_Layer: 5
   m_Name: PrintSettingButton
   m_TagString: Untagged
@@ -13084,6 +13277,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1798967897}
+--- !u!114 &1798967902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1798967897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898f6bd9ea887f342b680703623130bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1802879230
 GameObject:
   m_ObjectHideFlags: 0
