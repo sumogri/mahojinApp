@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextsHandler : MonoBehaviour {
+/// <summary>
+/// InfoのTextが使う処理群
+/// </summary>
+public class TextsHandler : MonoBehaviour{
+    [SerializeField] private Color normalColor;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    /// <summary>
+    /// normalColorを設定する
+    /// </summary>
+    /// <remarks>
+    /// 設定には、IColorChangeableを使用する
+    /// </remarks>
+    /// <param name="obj">セット対象のオブジェクト</param>
+    public void NormalColorSet(GameObject obj)
+    {
+        var colorObj = obj.GetComponent<IColorChangeable>();
+        if (colorObj == null) return;
+        colorObj.SetNormalColor(normalColor);
+    }
 }
