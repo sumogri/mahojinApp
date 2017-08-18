@@ -11,7 +11,7 @@ public class SelectableColorChanger : MonoBehaviour, IColorChangeable
 
     void Start()
     {
-        selectable = GetComponent<Button>();
+        selectable = GetComponent<Selectable>();
         defaultColorBlock = selectable.colors;
     }
 
