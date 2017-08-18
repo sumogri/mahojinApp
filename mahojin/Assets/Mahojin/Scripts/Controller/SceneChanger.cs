@@ -13,6 +13,6 @@ public class SceneChanger : MonoBehaviour {
     /// </summary>
     public void Change()
     {
-        SceneController.I.LoadAsync(changeToKind);
+        SceneController.I.LoadAsyncAllow(changeToKind);
     }
 }

@@ -19,8 +19,8 @@ public class SceneController : SingletonMonoBehaviour<SceneController>{
     {
         DontDestroyOnLoad(gameObject);
     }
-
-    public void LoadAsync(SceneKind load)
+    
+    public void LoadAsyncAllow(SceneKind load)
     {
         StartCoroutine(LoadScene(load));
     }
