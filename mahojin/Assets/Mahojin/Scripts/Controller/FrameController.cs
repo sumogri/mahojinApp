@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FrameController : MonoBehaviour {
+    [SerializeField] private bool isSelectable = true;
+    public bool IsSelectable { get { return isSelectable; } }
+    [SerializeField] private int num;
+    private PanelController havePanel;
     private Selectable mySelectable;
     private Color defaultDisable;
 
@@ -31,5 +35,26 @@ public class FrameController : MonoBehaviour {
         var colors = mySelectable.colors;
         colors.disabledColor = defaultDisable;
         mySelectable.colors = colors;
+    }
+
+    /// <summary>
+    /// パネルをセットする
+    /// </summary>
+    /// <param name="panel">セットするパネル</param>
+    public void SetPanel(PanelController panel)
+    {
+        havePanel = panel;
+        isSelectable = false;
+        num = 100;
+    }
+    
+    /// <summary>
+    /// セットされたパネルを外す
+    /// </summary>
+    public void ResetPanel()
+    {
+        havePanel = null;
+        isSelectable = true;
+        num = 0;
     }
 }

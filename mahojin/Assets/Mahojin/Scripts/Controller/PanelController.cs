@@ -28,6 +28,11 @@ public class PanelController : MonoBehaviour {
     {
         mouseDiff = transform.position - Input.mousePosition;
         transform.SetAsLastSibling();
+        if (toFrame != null)
+        {
+            toFrame.ResetPanel();
+            toFrame.Select();
+        }
     }
 
     public void OnDrag()
@@ -35,7 +40,8 @@ public class PanelController : MonoBehaviour {
         transform.position = Input.mousePosition + mouseDiff;
 
         //一番近いFrameがRadius以下の距離にあれば選択、過去のものは破棄
-        FrameController to= frameManager.Frames.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
+        FrameController to= frameManager.Frames.Where(x => x.IsSelectable)
+                            .OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
         float distPos = Vector3.Distance(to.transform.position, transform.position);
         if (distPos < manager.Radius && to != toFrame)
         {
@@ -56,7 +62,7 @@ public class PanelController : MonoBehaviour {
         {
             transform.position = toFrame.transform.position;
             toFrame.UnSelect();
-            toFrame = null;
+            toFrame.SetPanel(this);
         }
     }
 }
