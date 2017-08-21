@@ -7,6 +7,7 @@ public class FrameController : MonoBehaviour {
     [SerializeField] private bool isSelectable = true;
     public bool IsSelectable { get { return isSelectable; } }
     [SerializeField] private int num;
+    public int Num { get { return num; } }
     private PanelController havePanel;
     private Selectable mySelectable;
     private Color defaultDisable;

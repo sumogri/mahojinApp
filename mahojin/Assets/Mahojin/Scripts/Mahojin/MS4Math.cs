@@ -145,7 +145,21 @@ namespace Mahojin
         {
             return sumFulfillIndex.Select(x => x.Select(y => cells[y]).ToArray()).ToList();
         }
-        
+
+        /// <summary>
+        /// 魔方陣になっているかを判定するメソッド
+        /// ラテン方陣に対応するため、定和だけを見る
+        /// </summary>
+        /// <param name="cells">セルに入っている数値</param>
+        /// <returns>魔方陣であるか</returns>
+        public static bool IsMagicSquare(int?[] cells)
+        {
+            var sums = sumFuncs.Select(x => x.Invoke(cells)).Distinct();
+
+            if (sums.Count() != 1 || !sums.First().HasValue) return false;
+            return true;
+        }
+
         /// <summary>
         /// セルの定和を満たす単位ごとのIndexを初期化する
         /// </summary>
