@@ -15,7 +15,6 @@ public class PuzzleSelectableController : MonoBehaviour {
         get { return questionNum; }
         set {
             questionNum = value;
-            text.text = value.ToString();
         }
     }
     public QuestionManager QManager { get; set; }
@@ -31,6 +30,12 @@ public class PuzzleSelectableController : MonoBehaviour {
 
     public void SetInteractive(bool act)
     {
+        if(button == null) button = gameObject.GetComponent<Button>();
         button.interactable = act;
+    }
+
+    public void Update()
+    {
+        text.text = questionNum.ToString();
     }
 }

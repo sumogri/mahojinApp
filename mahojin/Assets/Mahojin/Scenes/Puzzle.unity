@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 909892537}
-  questionLength: 4
+  questionLength: 5
 --- !u!114 &925064343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4450,7 +4450,7 @@ Prefab:
     - target: {fileID: 224126759083358838, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 224630679112083552, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
@@ -4470,7 +4470,7 @@ Prefab:
     - target: {fileID: 224630679112083552, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 224116209718370570, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
