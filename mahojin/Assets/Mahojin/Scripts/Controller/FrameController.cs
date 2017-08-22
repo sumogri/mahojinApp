@@ -46,7 +46,7 @@ public class FrameController : MonoBehaviour {
     {
         havePanel = panel;
         isSelectable = false;
-        num = 100;
+        num = panel.Num;
     }
     
     /// <summary>

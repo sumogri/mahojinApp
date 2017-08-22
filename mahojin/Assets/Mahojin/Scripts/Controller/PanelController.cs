@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 public class PanelController : MonoBehaviour {
     [SerializeField] FrameManager frameManager;
     [SerializeField] int num;
+    public int Num { get { return num; } }
     private PanelManager manager;
     private FrameController toFrame;
     private Vector3 mouseDiff;
