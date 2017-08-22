@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class QuestionManager : MonoBehaviour {
     [SerializeField] private Transform canvas;
+    [SerializeField] private int questionLength;
+    public int QuestionLength { get { return questionLength; } }
     private Object nowQuestion;
     private int nowQuestionNo;
-    private Button[] buttons;
+    public int NowQuestionNo { get { return nowQuestionNo; } }
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +26,7 @@ public class QuestionManager : MonoBehaviour {
     {
         if (nowQuestion == null) return;
         Destroy(nowQuestion);
+        nowQuestionNo++;
         nowQuestion = Instantiate(Resources.Load("Prefabs/Questions/Question" + nowQuestionNo),canvas);
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnswerUIManager : SingletonMonoBehaviour<AnswerUIManager> {
     [SerializeField] private GameObject correctEffect;
@@ -9,11 +10,11 @@ public class AnswerUIManager : SingletonMonoBehaviour<AnswerUIManager> {
     public GameObject InCorrectEffect { get { return inCorrectEffect; } }
     [SerializeField] private GameObject answerUIRoot;
     public GameObject AnswerUIRoot { get { return answerUIRoot; } }
-
+    
     // Use this for initialization
     void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
