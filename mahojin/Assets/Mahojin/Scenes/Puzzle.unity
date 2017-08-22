@@ -4450,7 +4450,7 @@ Prefab:
     - target: {fileID: 224126759083358838, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224630679112083552, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
@@ -4470,7 +4470,7 @@ Prefab:
     - target: {fileID: 224630679112083552, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224116209718370570, guid: a315fa022c8d45443b19a0533ebd318d,
         type: 2}
@@ -5885,6 +5885,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1566056087}
+  - component: {fileID: 1566056088}
   m_Layer: 5
   m_Name: AnswerUIs
   m_TagString: Untagged
@@ -5914,6 +5915,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1566056088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1566056086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e411d752969b540823bd5df789ff4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnable:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1321079139}
+        m_MethodName: UpdateActive
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!224 &1836197675 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224608226940661330, guid: a315fa022c8d45443b19a0533ebd318d,

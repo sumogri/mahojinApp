@@ -28,4 +28,9 @@ public class PuzzleSelectableController : MonoBehaviour {
         button.onClick.AddListener(() => QManager.LoadQuestion(questionNum));
         button.onClick.AddListener(() => PManager.TopUIRoot.SetActive(false));
     }
+
+    public void SetInteractive(bool act)
+    {
+        button.interactable = act;
+    }
 }

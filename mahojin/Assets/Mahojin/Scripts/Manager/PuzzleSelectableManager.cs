@@ -18,6 +18,7 @@ public class PuzzleSelectableManager : MonoBehaviour {
             controllers[i].QuestionNum = i;
             controllers[i].QManager = questionManager;
             controllers[i].PManager = this;
+            controllers[i].SetInteractive(i < questionManager.QuestionLength);
         }
 	}
 	
