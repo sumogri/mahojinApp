@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Mahojin/Scenes/Title.unity
+    guid: a76bb9ed7a0c39d4893e9c9c16e5bc53
+  - enabled: 1
+    path: Assets/Mahojin/Scenes/Edit.unity
+    guid: be5c4d5d8c461554fa89dad93fd9c80a
+  - enabled: 1
+    path: Assets/Mahojin/Scenes/Puzzle.unity
+    guid: 9d4480dd8ad772c40b965f189b8b9a4c
