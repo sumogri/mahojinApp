@@ -159,6 +159,26 @@ namespace Mahojin
             if (sums.Count() != 1 || !sums.First().HasValue) return false;
             return true;
         }
+        
+        /// <summary>
+        /// 汎魔方陣になっているか判定するメソッド
+        /// 数の重複はチェックしない
+        /// </summary>
+        /// <param name="cells"></param>
+        /// <returns></returns>
+        public static bool IsPanMagicSquare(int?[] cells)
+        {
+            int?[] pCells = cells.Skip(4).Take(4 * 3).Concat(cells.Take(4)).ToArray();
+            bool ret = true;
+            
+            for(int i = 0; i < 4; i++)
+            {
+                ret &= IsMagicSquare(pCells);
+                pCells = pCells.Skip(4).Take(4 * 3).Concat(pCells.Take(4)).ToArray();
+            }
+
+            return ret;
+        }
 
         /// <summary>
         /// セルの定和を満たす単位ごとのIndexを初期化する
@@ -297,10 +317,10 @@ namespace Mahojin
             sumFuncs = new List<Func<int?[], int?>>();
 
             //列
-            foreach (var i in Enumerable.Range(0, 4))
+            foreach (var i in Enumerable.Range(0, 4).ToArray())
                 sumFuncs.Add(m => m[0 + 4 * i] + m[1 + 4 * i] + m[2 + 4 * i] + m[3 + 4 * i]);
             //行
-            foreach (var i in Enumerable.Range(0, 4))
+            foreach (var i in Enumerable.Range(0, 4).ToArray())
                 sumFuncs.Add(m => m[i] + m[i + 4] + m[i + 4 * 2] + m[i + 4 * 3]);
             //対角
             sumFuncs.Add(m => m[0] + m[1 + 4] + m[2 + 4 * 2] + m[3 + 4 * 3]);
