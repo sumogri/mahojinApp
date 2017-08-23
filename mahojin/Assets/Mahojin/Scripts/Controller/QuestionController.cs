@@ -6,7 +6,7 @@ using Mahojin;
 
 public class QuestionController : MonoBehaviour {
     private FrameManager frameManager;
-    public enum CorrectMode { MS3,MS4,PMS4 }
+    public enum CorrectMode { MS3,MS4,PMS4,LS4 }
     [SerializeField] private CorrectMode correctMode;
 
 	// Use this for initialization
@@ -33,6 +33,9 @@ public class QuestionController : MonoBehaviour {
                 break;
             case CorrectMode.PMS4:
                 ret = MS4Math.IsPanMagicSquare(frameManager.getCells());
+                break;
+            case CorrectMode.LS4:
+                ret = MS4Math.IsLatinSquare(frameManager.getCells());
                 break;
         }
         

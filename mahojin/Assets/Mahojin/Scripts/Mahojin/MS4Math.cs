@@ -181,6 +181,20 @@ namespace Mahojin
         }
 
         /// <summary>
+        /// ラテン方陣か判定するメソッド
+        /// 魔方陣とは違い、対角を見ない
+        /// </summary>
+        /// <param name="cells"></param>
+        /// <returns></returns>
+        public static bool IsLatinSquare(int?[] cells)
+        {
+            var sums = sumFuncs.Take(8).Select(x => x.Invoke(cells)).Distinct();
+
+            if (sums.Count() != 1 || !sums.First().HasValue) return false;
+            return true;
+        }
+
+        /// <summary>
         /// セルの定和を満たす単位ごとのIndexを初期化する
         /// </summary>
         private static void InitSumFulfillIndex()
