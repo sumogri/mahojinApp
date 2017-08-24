@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class AnswerButtonController : MonoBehaviour {
-    [SerializeField] private QuestionController questionController;
+    private QuestionController questionController;
     private GameObject CorrectEff;
     private GameObject InCorrectEff;
 
 	// Use this for initialization
 	void Start () {
+        questionController = GetComponentInParent<QuestionController>();
         CorrectEff = AnswerUIManager.I.CorrectEffect;
         InCorrectEff = AnswerUIManager.I.InCorrectEffect;
     }

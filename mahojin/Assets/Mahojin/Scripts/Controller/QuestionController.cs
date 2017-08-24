@@ -8,6 +8,7 @@ public class QuestionController : MonoBehaviour {
     private FrameManager frameManager;
     public enum CorrectMode { MS3,MS4,PMS4,LS4 }
     [SerializeField] private CorrectMode correctMode;
+    public QuestionManager Manager { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,7 @@ public class QuestionController : MonoBehaviour {
 	void Update () {
 		
 	}
-
+    
     public bool IsCorrectAnswer()
     {
         bool ret = false;
