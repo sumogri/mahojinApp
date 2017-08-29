@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 /// <summary>
 /// Puzzleモードでの数字パネルのコントローラー
 /// </summary>
-public class PanelController : MonoBehaviour {
-    [SerializeField] FrameManager frameManager;
-    [SerializeField] int num;
+public class PanelController : MonoBehaviour,IDragHandler,IBeginDragHandler,IEndDragHandler {
+    [SerializeField] private FrameManager frameManager;
+    [SerializeField] private int num;
     public int Num { get { return num; } }
     private PanelManager manager;
     private FrameController toFrame;
@@ -24,8 +25,29 @@ public class PanelController : MonoBehaviour {
 	void Update () {
 		
 	}
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position = Input.mousePosition + mouseDiff;
 
-    public void OnDown()
+        //一番近いFrameがRadius以下の距離にあれば選択、過去のものは破棄
+        FrameController to = frameManager.Frames.Where(x => x.IsSelectable)
+                            .OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
+        float distPos = Vector3.Distance(to.transform.position, transform.position);
+        if (distPos < manager.Radius && to != toFrame)
+        {
+            to.Select();
+            if (toFrame != null) toFrame.UnSelect();
+            toFrame = to;
+        }
+        else if (distPos >= manager.Radius)
+        {
+            if (toFrame != null) toFrame.UnSelect();
+            toFrame = null;
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
     {
         mouseDiff = transform.position - Input.mousePosition;
         transform.SetAsLastSibling();
@@ -36,28 +58,7 @@ public class PanelController : MonoBehaviour {
         }
     }
 
-    public void OnDrag()
-    {
-        transform.position = Input.mousePosition + mouseDiff;
-
-        //一番近いFrameがRadius以下の距離にあれば選択、過去のものは破棄
-        FrameController to= frameManager.Frames.Where(x => x.IsSelectable)
-                            .OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).FirstOrDefault();
-        float distPos = Vector3.Distance(to.transform.position, transform.position);
-        if (distPos < manager.Radius && to != toFrame)
-        {
-            to.Select();
-            if (toFrame != null) toFrame.UnSelect();            
-            toFrame = to;
-        }
-        else if(distPos >= manager.Radius)
-        {
-            if (toFrame != null) toFrame.UnSelect();
-            toFrame = null;
-        }
-    }
-
-    public void OnDrop()
+    public void OnEndDrag(PointerEventData eventData)
     {
         if (toFrame != null)
         {
